@@ -256,31 +256,73 @@ const ProduceMap: React.FC<ProduceMapProps> = ({
                         ))}
 
                         {/* Store Aisles */}
-                        {storeLayout.aisles.map((aisle) => (
-                            <div
-                                key={aisle.id}
-                                className="absolute bg-white border-2 border-gray-300 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 cursor-pointer group"
-                                style={{
-                                    left: aisle.x,
-                                    top: aisle.y,
-                                    width: aisle.width,
-                                    height: aisle.height
-                                }}
-                                onClick={() => onLocationClick && onLocationClick({ 
-                                    aisle: aisle.id, 
-                                    section: aisle.label, 
-                                    shelf: 'A1' 
-                                })}
-                            >
-                                <div className="p-2 h-full flex flex-col justify-center items-center text-center group-hover:bg-blue-50 rounded-xl transition-colors">
-                                    <div className="text-2xl mb-1">{aisle.icon}</div>
-                                    <div className="font-bold text-xs text-gray-800">{aisle.id}</div>
-                                    {showLabels && (
-                                        <div className="text-xs text-gray-600">{aisle.label}</div>
-                                    )}
+                                                {/* Store Aisles - Enhanced Produce Areas */}
+                        {storeLayout.aisles.map((aisle) => {
+                            // Define gradient and styling based on section
+                            const getAisleGradient = (section: string) => {
+                                switch (section) {
+                                    case 'fruits': return 'from-red-400/90 via-pink-400/90 to-orange-400/90';
+                                    case 'vegetables': return 'from-green-400/90 via-emerald-400/90 to-teal-400/90';
+                                    case 'herbs': return 'from-green-500/90 via-teal-500/90 to-cyan-500/90';
+                                    case 'organic': return 'from-purple-400/90 via-violet-400/90 to-indigo-400/90';
+                                    default: return 'from-blue-400/90 via-indigo-400/90 to-purple-400/90';
+                                }
+                            };
+
+                            const getBorderColor = (section: string) => {
+                                switch (section) {
+                                    case 'fruits': return 'border-red-300/60';
+                                    case 'vegetables': return 'border-green-300/60';
+                                    case 'herbs': return 'border-teal-300/60';
+                                    case 'organic': return 'border-purple-300/60';
+                                    default: return 'border-blue-300/60';
+                                }
+                            };
+
+                            return (
+                                <div
+                                    key={aisle.id}
+                                    className={`absolute bg-gradient-to-br ${getAisleGradient(aisle.section)} backdrop-blur-sm border-2 ${getBorderColor(aisle.section)} rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-500 cursor-pointer group hover:scale-105 transform`}
+                                    style={{
+                                        left: aisle.x,
+                                        top: aisle.y,
+                                        width: aisle.width,
+                                        height: aisle.height
+                                    }}
+                                    onClick={() => onLocationClick && onLocationClick({ 
+                                        aisle: aisle.id, 
+                                        section: aisle.label, 
+                                        shelf: 'A1' 
+                                    })}
+                                >
+                                    {/* Background pattern overlay */}
+                                    <div className="absolute inset-0 bg-white/20 rounded-2xl"></div>
+                                    
+                                    {/* Content */}
+                                    <div className="relative p-3 h-full flex flex-col justify-center items-center text-center">
+                                        {/* Icon with glow effect */}
+                                        <div className="text-3xl mb-2 group-hover:scale-110 transition-transform duration-300 filter drop-shadow-lg">
+                                            {aisle.icon}
+                                        </div>
+                                        
+                                        {/* Aisle ID */}
+                                        <div className="font-bold text-sm text-white bg-black/20 rounded-full px-3 py-1 mb-1 backdrop-blur-sm">
+                                            {aisle.id}
+                                        </div>
+                                        
+                                        {/* Label */}
+                                        {showLabels && (
+                                            <div className="text-xs font-semibold text-white/90 bg-white/10 rounded-full px-2 py-1 backdrop-blur-sm">
+                                                {aisle.label}
+                                            </div>
+                                        )}
+                                        
+                                        {/* Hover effect - animated border */}
+                                        <div className="absolute inset-0 border-2 border-white/50 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                                    </div>
                                 </div>
-                            </div>
-                        ))}
+                            );
+                        })}
 
                         {/* Store Entrance */}
                         <div
