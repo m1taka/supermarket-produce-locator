@@ -4,11 +4,13 @@ import cors from 'cors';
 import { config } from 'dotenv';
 import produceRoutes from './routes/produceRoutes';
 import storeRoutes from './routes/storeRoutes';
+import adminRoutes from './routes/adminRoutes';
+import productRoutes from './routes/productRoutes';
 
 config();
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT || 5001;
 
 // Middleware
 app.use(cors({
@@ -50,6 +52,8 @@ app.get('/health', (req: express.Request, res: express.Response) => {
 // API Routes
 app.use('/api', produceRoutes);
 app.use('/api', storeRoutes);
+app.use('/api/admin', adminRoutes);
+app.use('/api/admin', productRoutes);
 
 // 404 handler
 app.use('*', (req: express.Request, res: express.Response) => {

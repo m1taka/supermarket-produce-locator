@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import Link from 'next/link';
 import { Produce, SearchFilters, PaginatedResponse } from '../types';
 import SearchBar from '../components/SearchBar';
 import ProduceList from '../components/ProduceList';
@@ -171,6 +172,13 @@ export default function HomePage() {
                             </p>
                         </div>
                         <div className="flex items-center space-x-3">
+                            <Link 
+                                href="/supermarkets"
+                                className="hidden sm:flex items-center space-x-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg px-4 py-2 hover:from-blue-600 hover:to-purple-700 transition-all duration-200 shadow-lg hover:shadow-xl font-medium"
+                            >
+                                <MapPin className="w-4 h-4" />
+                                <span>Browse Stores</span>
+                            </Link>
                             <div className="hidden sm:flex items-center space-x-2 bg-white/60 backdrop-blur-sm rounded-full px-4 py-2 border border-white/30">
                                 <div className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></div>
                                 <span className="text-sm font-medium text-gray-700">Live Store Map</span>
